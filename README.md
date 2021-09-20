@@ -1,4 +1,4 @@
-# Group 34
+# Group 33
 Group Name: Sky Sharks
 
 [MVP Link](https://docs.google.com/document/d/1ncoZ4vxdfq3RSRZukNUkUhNFLktbIM2cFoCNgZS4nhA/edit?usp=sharing)
