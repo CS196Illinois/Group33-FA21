@@ -1,0 +1,19 @@
+{
+  "name": "2.1",
+  "version": "1.0.0",
+  "description": "This is a following a tutorial made by Daniel Schiffman. Code written in this project isn't original, and the tutorial can be found on The Coding Train Youtube channel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "example",
+    "tutorial",
+    "data"
+  ],
+  "author": "Owen Cushing (original by Daniel Shiffman)",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
