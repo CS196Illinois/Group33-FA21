@@ -9,5 +9,8 @@
     "stop": "stop"
   },
   "author": "jamie rollison (following code originally written by daniel shiffman)",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
