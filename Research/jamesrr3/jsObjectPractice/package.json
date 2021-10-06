@@ -1,0 +1,14 @@
+{
+  "name": "jsobjectpractice",
+  "version": "1.0.0",
+  "description": "making objects in js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jamie rollison",
+  "license": "ISC",
+  "dependencies": {
+    "math": "0.0.3"
+  }
+}

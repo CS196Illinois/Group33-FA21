@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <title>test</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+        <style>
+            #mapid { height: 360px; }
+        </style>
+
+    </head>
+    <body>
+        <p>okay</p>
+        <div id="mapid">
+            <script>
+                const mymap = L.map('mapid').setView([40.1105, -88.2218], 13)
+                const attribution = 
+                    '&copy; <a href ="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+                
+                const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                const tiles = L.tileLayer(tileUrl, { attribution });
+                tiles.addTo(mymap)
+                
+                var tyler = L.icon({
+                    iconUrl: 'tyler.jpg',
+                    iconSize: [32, 50],
+                    iconAnchor: [25, 16]
+                });
+
+                var marker = L.marker([40.11057618021301, -88.22185298950282], {icon: tyler}).addTo(mymap)
+                marker.bindPopup("<b>test</b><br>the isr");
+            </script>
+        </div>
+    </body>
+</html>
