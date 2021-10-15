@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "noisedot",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+    {
+      "target": "map",
+      "public": "public",
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}
