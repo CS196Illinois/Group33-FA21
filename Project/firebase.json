@@ -7,9 +7,6 @@
       "**/.*",
       "**/node_modules/**"
     ]
-    {
-      "target": "map",
-      "public": "public",
   },
   "storage": {
     "rules": "storage.rules"

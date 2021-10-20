@@ -1,20 +1,15 @@
-var fs = require('fs')
-var path = require('path');
-var https = require('https');
-var http = require('http');
+const fs = require('fs')
+const path = require('path');
+const https = require('https');
+const http = require('http');
+const express = require('express');
 
-// api key is hidden here and .gitignored. if you need the key, let jamie know
-import {key} from key.js
+//import firebase things
+const initStorage = require('firebase/storage');
+const initFirebase = require('firebase/app');
+// putting the API key on the internet is bad. Get the key.js file from jamie
+const key = require(path.resolve( __dirname, "./key.js"))
 
-// Code from Firebase SDK
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getStorage } from "firebase/storage";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: key.MY_KEY,
   authDomain: "noisedot-a5ac4.firebaseapp.com",
@@ -26,36 +21,39 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const storage = getStorage(app);
+const firebase = initFirebase.initializeApp(firebaseConfig);
+const storage = initStorage.getStorage(firebase);
 
-
+// initialize https
 const options = {
     key: fs.readFileSync('sslcert/key.pem', 'utf8'),
     cert: fs.readFileSync('sslcert/cert.pem', 'utf8')
 };
 
-const express = require('express');
-const exp = express();
-exp.use(express.static('public'))
+// build app
+const app = express();
+app.use(express.static('public'))
 
-
-exp.get('/', (req, res) =>
+// initial endpoint. we might change this to the map later.
+app.get('/', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/landing.html'))
 );
 
-exp.get('/map', (req, res) =>
+// map endpoint.
+app.get('/map', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/map.html'))
 );
 
-exp.get('/audio', (req, res) =>
+// audio list endpoint.
+app.get('/audio', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/audio.html'))
 );
 
-var httpsServer = https.createServer(options, exp);
-var httpServer = http.createServer(exp);
-module.exports = exp;
+// runs app on both https and http
+const httpsServer = https.createServer(options, app);
+const httpServer = http.createServer(app);
+module.exports = app;
 
 httpServer.listen(3000, () => console.log("listening at port 3000"));
 httpsServer.listen(8000, () => console.log('https on port 8000'));
+console.log(path.join(__dirname, '/public/map.html'))
