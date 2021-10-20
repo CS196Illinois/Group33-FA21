@@ -35,14 +35,15 @@
                 //isr.bindPopup("<b>test</b><br>the isr");
 
                 mymap.on('click', (e) => {
-                    var userMarker = new L.marker(e.latlng).addTo(mymap)
+                    var clickMarker = new L.marker(e.latlng).addTo(mymap)
                 })
 
                 var user = navigator.geolocation.getCurrentPosition(() => {
                     console.log('user spotted');
-                })
+                    var userloc = new L.marker([user.latitude, user.longitude]);
+                });
 
-                var userMarker = L.marker(user.)
+
             </script>
         </div>
     </body>

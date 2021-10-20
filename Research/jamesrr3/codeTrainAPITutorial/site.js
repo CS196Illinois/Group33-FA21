@@ -1,5 +1,3 @@
-'use strict';
-
 var fs = require('fs')
 var https = require('https');
 var http = require('http');
@@ -20,11 +18,11 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) =>
-    res.sendFile('C:\\Users\\james\\Documents\\CS196\\Group33-FA21\\Research\\jamesrr3\\codeTrainAPITutorial\\public\\landing.html')
+    res.sendFile(path.join(__dirname, '/landing.html'))
 );
 
 app.get('/map', (req, res) =>
-    res.sendFile('C:\\Users\\james\\Documents\\CS196\\Group33-FA21\\Research\\jamesrr3\\codeTrainAPITutorial\\public\\map.html')
+    res.sendFile(path.join(__dirname, '/map.html'))
 );
 
 var httpsServer = https.createServer(options, app);

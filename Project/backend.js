@@ -36,7 +36,7 @@ app.use(express.static('public'))
 
 // initial endpoint. we might change this to the map later.
 app.get('/', (req, res) =>
-    res.sendFile(path.join(__dirname, '/public/landing.html'))
+    res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
 // map endpoint.
