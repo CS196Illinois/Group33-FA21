@@ -3,10 +3,9 @@
   "name": "trance",
   "type": "mp3",
   "description": "This is a stupid song from the early 2000s that was used on youtube videos alot",
-  "location": {
-    "lat": 0,
-    "long": 0
-  },
+  "lat": 0,
+  "long": 0,
   "date": "[insert unix format here]",
-  "uploader": "jam"
+  "uploader": "jam",
+  "file": "audio/001.mp3"
 }
