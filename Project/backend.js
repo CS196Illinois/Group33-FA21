@@ -54,12 +54,13 @@ const httpsServer = https.createServer(options, app);
 const httpServer = http.createServer(app);
 module.exports = app;
 
-const listRef = firebaseStorage.ref(storage, 'files/uid')
+const listRef = firebaseStorage.ref(storage, '')
+// Test thing to list all the files
+/*
 firebaseStorage.listAll(listRef)
   .then((res) => {
     res.prefixes.forEach((folderRef) => {
       console.log(folderRef)
-      console.log('hr')
     });
     res.items.forEach((itemRef) => {
       console.log(itemRef)
@@ -67,6 +68,6 @@ firebaseStorage.listAll(listRef)
   }).catch((error) => {
     console.log(`error: ${error}`)
   });
-
+*/
 httpServer.listen(3000, () => console.log("listening at port 3000"));
 httpsServer.listen(8000, () => console.log('https on port 8000'));
