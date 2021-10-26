@@ -48,13 +48,15 @@ function error(err) {
 
 var user = navigator.geolocation.getCurrentPosition(success, error, options);
 
-async function soundOnMap() {
-    const response = await fetch("../data/001.json");
+// puts a sound as a map marker
+async function soundOnMap(id) {
+    const response = await fetch(`../data/${id}.json`);
     const data = await response.json();
     console.log(data.lat, data.long);
     const location = [data.lat, data.long]
     var soundMark = new L.marker(location, {icon: logo}).addTo(map);
-    soundMark.bindPopup(`${data.name}`);
+    soundMark.bindPopup(`<a href = "../audio/${data.id}.${data.type}">${data.name}</a>`);
 }
 
-soundOnMap()
+soundOnMap('001')
+soundOnMap('002')

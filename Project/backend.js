@@ -5,7 +5,7 @@ const http = require('http');
 const express = require('express');
 
 //import firebase things
-const initStorage = require('firebase/storage');
+const firebaseStorage = require('firebase/storage');
 const initFirebase = require('firebase/app');
 // putting the API key on the internet is bad. Get the key.js file from jamie
 const key = require(path.resolve( __dirname, "./key.js"))
@@ -22,7 +22,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebase = initFirebase.initializeApp(firebaseConfig);
-const storage = initStorage.getStorage(firebase);
+const storage = firebaseStorage.getStorage(firebase);
 
 // initialize https
 const options = {
@@ -54,6 +54,19 @@ const httpsServer = https.createServer(options, app);
 const httpServer = http.createServer(app);
 module.exports = app;
 
+const listRef = firebaseStorage.ref(storage, 'files/uid')
+firebaseStorage.listAll(listRef)
+  .then((res) => {
+    res.prefixes.forEach((folderRef) => {
+      console.log(folderRef)
+      console.log('hr')
+    });
+    res.items.forEach((itemRef) => {
+      console.log(itemRef)
+    });
+  }).catch((error) => {
+    console.log(`error: ${error}`)
+  });
+
 httpServer.listen(3000, () => console.log("listening at port 3000"));
 httpsServer.listen(8000, () => console.log('https on port 8000'));
-console.log(path.join(__dirname, '/public/map.html'))

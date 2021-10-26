@@ -1,0 +1,11 @@
+{
+  "id": "002",
+  "name": "boom",
+  "type": "mp3",
+  "description": "What the dog doin?",
+  "lat": 38.50,
+  "long": -85.22,
+  "date": "[insert unix format here]",
+  "uploader": "jam",
+  "file": "audio/002.mp3"
+}
