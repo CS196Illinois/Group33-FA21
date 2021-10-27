@@ -24,7 +24,7 @@ map.on('click', (e) => {
 
 
 //Marker based on user geolocation taken directly from navigator docs
-var options = {
+var navOptions = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
@@ -44,17 +44,27 @@ function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-var user = navigator.geolocation.getCurrentPosition(success, error, options);
+var user = navigator.geolocation.getCurrentPosition(success, error, navOptions);
 
 // puts a sound as a map marker
 async function soundOnMap(id) {
-    const response = await fetch(`../data/${id}.json`);
+    var fetchOptions = {
+        body: id
+    }
+    const response = await fetch('/firebaseJSON', fetchOptions);
     const data = await response.json();
     console.log(data.lat, data.long);
     const location = [data.lat, data.long]
     var soundMark = new L.marker(location, {icon: logo}).addTo(map);
-    soundMark.bindPopup(`<a href = "../audio/${data.id}.${data.type}">${data.name}</a>`);
+    soundMark.bindPopup(`<a href = "${getAudio(id)}">${data.name}</a>`);
 }
 
 soundOnMap('001')
 soundOnMap('002')
+
+document.getElementById('test').innerHTML = `
+    <h1> test </h1>
+    <audio controls>
+        <source src = "${getAudio.get}" ></source>
+    </audio>
+`

@@ -33,6 +33,7 @@ const options = {
 // build app
 const app = express();
 app.use(express.static('public'))
+app.use(express.json())
 
 // initial endpoint. we might change this to the map later.
 app.get('/', (req, res) =>
@@ -48,6 +49,14 @@ app.get('/map', (req, res) =>
 app.get('/audio', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/audio.html'))
 );
+
+// BROKEN
+app.get('/firebaseJSON' + id, (req, res) => {
+  storage.child(`audioData/${body}.json`).getDownloadURL()
+  .catch((error) => {
+    console.log(`error loading file: ${error}`)
+  });
+})
 
 // runs app on both https and http
 const httpsServer = https.createServer(options, app);
