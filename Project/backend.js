@@ -5,8 +5,8 @@ const http = require('http');
 const express = require('express');
 
 //import firebase things
-const firebaseStorage = require('firebase/storage');
 const initFirebase = require('firebase/app');
+const firebaseStorage = require('firebase/storage');
 // putting the API key on the internet is bad. Get the key.js file from jamie
 const key = require(path.resolve( __dirname, "./key.js"))
 
@@ -22,7 +22,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebase = initFirebase.initializeApp(firebaseConfig);
-const storage = firebaseStorage.getStorage(firebase);
+const storage = firebaseStorage.getStorage(firebase); // is a FirebaseStorage Instance
+const storageRef = firebaseStorage.ref(storage); // is a reference to our storage
 
 // initialize https
 const options = {
@@ -51,11 +52,21 @@ app.get('/audio', (req, res) =>
 );
 
 // BROKEN
-app.get('/firebaseJSON' + id, (req, res) => {
-  storage.child(`audioData/${body}.json`).getDownloadURL()
+app.get('/firebaseJSON', (req, res) => { 
+    const pathReference = firebaseStorage.ref(storage, `audioData/${req.headers.ID}.json`)
+    const url = firebaseStorage.getDownloadURL(pathReference)
+    // from the URL, recieve the JSON file
+    fetch(url) // WHY IS THIS NOT DEFINED?? Need a way to FETCH the json data from the download URL!
+    .then(response => response.json())
+    .then(res.send(data))
+    // convert it to a JSON format
+    // send it back!
+    // res.send(url.toString())
+  /*
   .catch((error) => {
     console.log(`error loading file: ${error}`)
   });
+  */
 })
 
 // runs app on both https and http
@@ -63,7 +74,7 @@ const httpsServer = https.createServer(options, app);
 const httpServer = http.createServer(app);
 module.exports = app;
 
-const listRef = firebaseStorage.ref(storage, '')
+//const listRef = firebaseStorage.ref(storage, '')
 // Test thing to list all the files
 /*
 firebaseStorage.listAll(listRef)

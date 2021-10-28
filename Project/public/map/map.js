@@ -49,7 +49,9 @@ var user = navigator.geolocation.getCurrentPosition(success, error, navOptions);
 // puts a sound as a map marker
 async function soundOnMap(id) {
     var fetchOptions = {
-        body: id
+        headers: {
+          ID: id
+        } 
     }
     const response = await fetch('/firebaseJSON', fetchOptions);
     const data = await response.json();
