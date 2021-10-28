@@ -1,3 +1,5 @@
+//const { stringify } = require("querystring");
+
 const map = L.map('map').setView([40.1105, -88.2218], 13)
 const attribution = 
     '&copy; <a href ="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -48,25 +50,59 @@ var user = navigator.geolocation.getCurrentPosition(success, error, navOptions);
 
 // puts a sound as a map marker
 async function soundOnMap(id) {
-    var fetchOptions = {
+    var fetchJSONOptions = {
         headers: {
-          ID: id
+          'Content-Type': 'application/json',
+          id: JSON.stringify(id)
         } 
     }
-    const response = await fetch('/firebaseJSON', fetchOptions);
-    const data = await response.json();
+    const soundJson = await fetch('/firebaseJson', fetchJSONOptions);
+    const data = await soundJson.json();
     console.log(data.lat, data.long);
     const location = [data.lat, data.long]
-    var soundMark = new L.marker(location, {icon: logo}).addTo(map);
-    soundMark.bindPopup(`<a href = "${getAudio(id)}">${data.name}</a>`);
+    //console.log(data.type)
+    //var fileType;
+    /*switch (data.type) {
+        case 'wav':
+            fileType = 'wav'
+            break;
+        case 'ogg':
+            fileType = 'ogg'
+            break;
+        default:
+            fileType = 'mpeg'
+            break;
+    }
+    console.log(fileType)
+
+    var fetchAudioOptions = {
+        headers: {
+          'Content-Type': `audio/${fileType}`,
+          id: JSON.stringify(id)
+        } 
+    }
+
+    */var soundMark = new L.marker(location, {icon: logo}).addTo(map);
+    //soundMark.bindPopup(
+    //    document.getElementById("clicked marker").innerHTML = `
+    //    <h5>${data.name}</h5><br><p>${data.description}</p>
+    //`)
+      //  headers: {})
+        /*`
+        <a href = "/audio/#${id}">${data.name}</a>
+        <audio controls>
+            <source src = "/audio/#${
+                await fetch('/firebaseAudio', {
+                    headers: {
+                        'Content-Type': `audio/${data.type}`,
+                        id: JSON.stringify(id)
+                    }
+                })
+            }">" type = "audio/mpeg">
+        </audio>
+        
+    `*/
 }
 
 soundOnMap('001')
 soundOnMap('002')
-
-document.getElementById('test').innerHTML = `
-    <h1> test </h1>
-    <audio controls>
-        <source src = "${getAudio.get}" ></source>
-    </audio>
-`

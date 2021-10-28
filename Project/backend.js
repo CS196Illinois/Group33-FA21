@@ -3,6 +3,7 @@ const path = require('path');
 const https = require('https');
 const http = require('http');
 const express = require('express');
+const fetch = require('node-fetch')
 
 //import firebase things
 const initFirebase = require('firebase/app');
@@ -51,22 +52,23 @@ app.get('/audio', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/audio.html'))
 );
 
-// BROKEN
-app.get('/firebaseJSON', (req, res) => { 
-    const pathReference = firebaseStorage.ref(storage, `audioData/${req.headers.ID}.json`)
-    const url = firebaseStorage.getDownloadURL(pathReference)
-    // from the URL, recieve the JSON file
-    fetch(url) // WHY IS THIS NOT DEFINED?? Need a way to FETCH the json data from the download URL!
+// gets JSON file from firebase db
+app.get('/firebaseJSON', (req, res) => {
+    const pathReference = firebaseStorage.ref(storage, `data/${req.headers.id.replace(/\"/g, "")}.json`)
+    firebaseStorage.getDownloadURL(pathReference)
+    .then(response => fetch(response))
     .then(response => response.json())
-    .then(res.send(data))
-    // convert it to a JSON format
-    // send it back!
-    // res.send(url.toString())
-  /*
-  .catch((error) => {
-    console.log(`error loading file: ${error}`)
-  });
-  */
+    .then(data => res.send(data))
+})
+
+//BROKEN
+app.get('/firebaseAudio', (req, res) => { 
+  const json = fetch('/firebaseJSON', req)
+  const pathReference = firebaseStorage.ref(storage, `audio/${json.id.replace(/\"/g, "")}.${json.type}`)
+  firebaseStorage.getDownloadURL(pathReference)
+  .then(response => fetch(response))
+  .then(response => response.blob())
+  .then(data => res.send(data))
 })
 
 // runs app on both https and http
@@ -74,20 +76,5 @@ const httpsServer = https.createServer(options, app);
 const httpServer = http.createServer(app);
 module.exports = app;
 
-//const listRef = firebaseStorage.ref(storage, '')
-// Test thing to list all the files
-/*
-firebaseStorage.listAll(listRef)
-  .then((res) => {
-    res.prefixes.forEach((folderRef) => {
-      console.log(folderRef)
-    });
-    res.items.forEach((itemRef) => {
-      console.log(itemRef)
-    });
-  }).catch((error) => {
-    console.log(`error: ${error}`)
-  });
-*/
 httpServer.listen(3000, () => console.log("listening at port 3000"));
 httpsServer.listen(8000, () => console.log('https on port 8000'));

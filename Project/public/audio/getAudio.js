@@ -1,15 +1,16 @@
 // Purpose: fetch and return the audio file from Firebase given an ID
-function getAudio(ID) {
-  //returns a blob object with the selected audio?
-  return storage.child(`audio/${ID}.mp3`).getDownloadURL()
-  .catch((error) => {
-    console.log(`error loading file: ${error}`)
-  });
-}
-
-function getJson(ID) {
-  return storage.child(`audioData/${ID}.json`).getDownloadURL()
-  .catch((error) => {
-    console.log(`error loading file: ${error}`)
-  });
+function soundInList(id) {
+  var fetchOptions = {
+    headers: {
+      'Content-Type': 'audio/json',
+      id: JSON.stringify(id)
+    } 
+  }
+  const soundJson = await fetch('/firebaseJson', fetchOptions);
+  const data = await soundJson.json();
+  soundMark.bindPopup(`
+      <audio controls>
+          <source src = "/audio/#${id}">${data.name}" type = "audio/mpeg">
+      </audio>
+  `);
 }
