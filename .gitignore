@@ -1,2 +1,8 @@
 .DS_Store
-\Research\owenpc2\Coding Train (Working with Data and APIs in JS)\2.1\node_modules
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+node_modules
+key.js
+.swiftpm
