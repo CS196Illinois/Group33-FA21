@@ -52,6 +52,11 @@ app.get('/audio', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/audio.html'))
 );
 
+// upload page endpoint.
+app.get('/upload', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/upload.html'))
+});
+
 // gets JSON file from firebase db
 app.get('/firebaseJSON', (req, res) => {
     const pathReference = firebaseStorage.ref(storage, `data/${req.headers.id.replace(/\"/g, "")}.json`)
