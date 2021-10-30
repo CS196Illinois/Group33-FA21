@@ -16,13 +16,17 @@ var logo = L.icon({
     popupAnchor:  [0, -16] // point from which the popup should open relative to the iconAnchor
 })
 
-var isr = L.marker([40.11057618021301, -88.22185298950282], {icon: logo}).addTo(map)
-isr.bindPopup("<b>test</b><br>the isr");
+//----- ISR Marker (for testing)---------
+// var isr = L.marker([40.11057618021301, -88.22185298950282], {icon: logo}).addTo(map)
+// isr.bindPopup("<b>test</b><br>the isr");
 
+// ------Marker that is placed where the user clicks (for testing)------------
+/*
 var clickMarker = new L.marker([0,0], {icon: logo})
 map.on('click', (e) => {
     clickMarker.setLatLng(e.latlng).addTo(map)
 })
+*/
 
 
 //Marker based on user geolocation taken directly from navigator docs
@@ -100,9 +104,19 @@ async function soundOnMap(id) {
                 })
             }">" type = "audio/mpeg">
         </audio>
-        
     `*/
 }
 
 soundOnMap('001')
 soundOnMap('002')
+
+/* ----- Plan for the map -----
+  - Need to *iterate* through the Firebase JSON data and place "noisedots" on the map
+  - On the popup of each noisedots, the title can be displayed
+    AND things relevant information needs to be shown below such as:
+    - Sound Title: 
+    - Description: 
+    - *Uploader:
+    - Date of Upload:
+  - but above all needs to be an AUDIO TAG that actually plays the SELECTED noisedot's audio
+*/

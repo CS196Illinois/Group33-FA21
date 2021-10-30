@@ -7,8 +7,28 @@
   <title>Upload</title>
 </head>
 <body>
-  <h1 style="font-family: 'Courier New', Courier, monospace;">Upload Files Here</h1>
+  <h1 style="font-family: 'Courier New', Courier, monospace;">upload files here</h1>
+  <div>
+    <a rel="self" href="/">home</a>
+  </div>
   <br>
+  <!-- Form is a way of having the user input info for upload -->
+  <!-- May not be the thing we want to use, but it is fine for now... -->
+  <form action="" method="POST">
+    <div>
+      <label for="audioFile">File to Upload: </label>
+      <input type="file" id="audioFile" name="audioFile">
+    </div>
+    <div>
+      <label for="title">Title: </label>
+      <input type="text" id="title" name="title">
+    </div>
+    <div>
+      <label for="description">Description: </label>
+      <input type="text" id="description" name="description">
+    </div>
+    <button type="submit" id="uploadButton">Upload</button>
+  </form>
   <script>
     /* writing these notes in a script tag cuz I'm lazy, and I really don't wanna code this rn
 
@@ -23,6 +43,16 @@
       - Find a way to upload an audio file through an API
       - Create the basic DOM elements
       - Implement an express POST function that uploads the AUDIO and JSON data to the server
+
+    Idea for how to approach this:
+      - Start by making the HTML form upload page
+      - Send the info to an endpoint / method that will:
+        - Create a unique key
+        - Construct a JSON file from the form information provided
+          - If any required information is missing, this should should be handled.
+          - Stop the process and force the user to enter the correct information.
+        - Upload the JSON file (named using the key) to Firebase
+        - Upload the Audio file (named using the key) to Firebase
     */
   </script>
 </body>
