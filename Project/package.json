@@ -1,0 +1,35 @@
+{
+  "name": "noisedot",
+  "version": "1.0.0",
+  "description": "CS196 Group 33 Project. Social media app where sounds can be uploaded, with an associated location shown on a map.",
+  "main": "backend.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase": "^9.1.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test",
+    "start": "start",
+    "stop": "stop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CS196Illinois/Group33-FA21.git"
+  },
+  "keywords": [
+    "App",
+    "Audio",
+    "leaflet",
+    "map",
+    "sound",
+    "music",
+    "noisedot"
+  ],
+  "author": "Maanav Agrawal, Krushank Bayyapu, Owen Cushing, Jamie Rollison, Shaarav Rotiwar, Cole Zimmerman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CS196Illinois/Group33-FA21/issues"
+  },
+  "homepage": "https://github.com/CS196Illinois/Group33-FA21#readme"
+}

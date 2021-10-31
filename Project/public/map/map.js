@@ -1,5 +1,4 @@
-//const { stringify } = require("querystring");
-
+// Initialize map, including making object that defines our custom map marker
 const map = L.map('map').setView([40.1105, -88.2218], 13)
 const attribution = 
     '&copy; <a href ="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
@@ -29,13 +28,16 @@ map.on('click', (e) => {
 */
 
 
-//Marker based on user geolocation taken directly from navigator docs
+// Makes a map marker based on user's coordinates
+
+// Options object for the navigator function
 var navOptions = {
     enableHighAccuracy: true,
     timeout: 5000,
     maximumAge: 0
 };
 
+// Function to run on geolocation success
 function success(pos) {
     var crd = pos.coords;
     console.log('Your current position is:');
@@ -46,13 +48,16 @@ function success(pos) {
     userMark.bindPopup("you!")
 }
 
+// Function to run on error when finding location
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
 var user = navigator.geolocation.getCurrentPosition(success, error, navOptions);
 
-// puts a sound as a map marker
+
+// Makes a map marker from a given ID. 
+// TODO: fetch audio and associate it with said map marker
 async function soundOnMap(id) {
     var fetchJSONOptions = {
         headers: {

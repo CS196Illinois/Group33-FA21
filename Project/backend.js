@@ -8,7 +8,7 @@ const fetch = require('node-fetch')
 //import firebase things
 const initFirebase = require('firebase/app');
 const firebaseStorage = require('firebase/storage');
-// putting the API key on the internet is bad. Get the key.js file from jamie
+// putting the API key on the internet is bad. Get the key.js file from discord
 const key = require(path.resolve( __dirname, "./key.js"))
 
 const firebaseConfig = {
@@ -66,7 +66,7 @@ app.get('/firebaseJSON', (req, res) => {
     .then(data => res.send(data))
 })
 
-//BROKEN
+//BROKEN: gets audio file from firebase db
 app.get('/firebaseAudio', (req, res) => { 
   const json = fetch('/firebaseJSON', req)
   const pathReference = firebaseStorage.ref(storage, `audio/${json.id.replace(/\"/g, "")}.${json.type}`)
