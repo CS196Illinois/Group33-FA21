@@ -10,8 +10,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "test",
-    "start": "start",
-    "stop": "stop"
+    "start": "node .\\backend.js"
   },
   "repository": {
     "type": "git",
