@@ -48,8 +48,8 @@ app.get('/map', (req, res) =>
 );
 
 // audio list endpoint.
-app.get('/audio', (req, res) =>
-    res.sendFile(path.join(__dirname, '/public/audio.html'))
+app.get('/browse', (req, res) =>
+    res.sendFile(path.join(__dirname, '/public/browse.html'))
 );
 
 // upload page endpoint.

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <title>Audio List</title>
+    </head>
+    <body>
+
+      <header class="p-2 bg-dark text-white">
+        <div class="container">
+          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><a href="/" class="nav-link px-3 text-white" style="font-family: 'Courier New', Courier, monospace; font-size: x-large;">Home</a></li>
+              <li><a href="/map/" class="nav-link px-3 text-white" style="font-family: 'Courier New', Courier, monospace; font-size: x-large;">Map</a></li>
+              <li><a href="/browse/" class="nav-link px-3 text-secondary" style="font-family: 'Courier New', Courier, monospace; font-size: x-large;">Browse</a></li>
+              <li><a href="/upload/" class="nav-link px-3 text-white" style="font-family: 'Courier New', Courier, monospace; font-size: x-large;">Upload</a></li>
+            </ul>
+            <div class="text-end">
+              <button type="button" class="btn btn-outline-light me-2">Login</button>
+              <button type="button" class="btn btn-warning">Sign-up</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <audio controls>
+          <source src="../audio/001.mp3" type='audio/mpeg'>
+      </audio>
+      <script>
+        /* We want to be able to fetch all of the audio from Firebase and display it 
+            using the fetch script, iterating through every element.
+        * For this, we either need to:
+          - have a seperate file on Firebase that contains the generated ID of every single audio file (which isn't ideal) 
+          or
+          - Find a script that would return the name of every JSON file (ID).
+        * Another thing to consider:
+          - We don't want to have to get EVERY single audio file at once, 
+            so we need to have a selection / filtering system.
+          - This could be:
+            - Start with a button at the bottom of the page, that when clicked, loads another X things.
+            - Then make *filtering* by:
+              - Location
+              - Date
+              - Length
+              - Tags (assigned using the AI / ML Component)
+              - etc.
+        */
+      </script>
+    </audio>
+    </body>
+</html>
