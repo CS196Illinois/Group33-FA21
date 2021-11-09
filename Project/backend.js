@@ -4,7 +4,7 @@ const https = require('https');
 const http = require('http');
 const express = require('express');
 const fetch = require('node-fetch');
-global.URL = require('url-polyfill');
+// const Blob = require('node:buffer');
 
 //import firebase things
 const initFirebase = require('firebase/app');
@@ -37,10 +37,12 @@ const options = {
 const app = express();
 app.use(express.static('public'))
 app.use(express.json())
+/*
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
   });
+*/
 
 // initial endpoint. we might change this to the map later.
 app.get('/', (req, res) =>
@@ -71,22 +73,15 @@ app.get('/firebaseJSON', (req, res) => {
     .then(data => res.send(data))
 })
 
-//BROKEN: gets audio file from firebase db
-app.get('/firebaseAudio', (req, res) => {
+//Fixed: gets audio file from firebase db
+app.get('/firebaseAudio', async (req, res) => {
     const pathReference = firebaseStorage.ref(storage, 
         `audio/${req.headers.id.replace(/\"/g, "")}.${req.headers.type.replace(/\"/g, "")}`)
-    firebaseStorage.getDownloadURL(pathReference)
-    .then(url => fetch(url))
-    .then(download => {
-        console.log(`downloaded:`)
-        console.log(download)
-        return download.blob()
-    }).then(blob => {
-        console.log(`blob:`)
-        console.log(blob)
-        res.send(blob)
-        return blob;
-    });
+    await firebaseStorage.getDownloadURL(pathReference)
+    .then(url => {
+      res.send(url)
+      // fetch(url)
+    })
 });
 
 // runs app on both https and http
