@@ -1,0 +1,26 @@
+{
+    "001":
+    {
+        "id": "001",
+        "name": "trance",
+        "type": "mp3",
+        "description": "This is a stupid song from the early 2000s that was used on youtube videos alot",
+        "lat": 40.11,
+        "long": -88.22,
+        "date": "[insert unix format here]",
+        "uploader": "jam",
+        "file": "audio/001.mp3"
+    },
+    "002":
+    {
+        "id": "002",
+        "name": "boom",
+        "type": "mp3",
+        "description": "What the dog doin?",
+        "lat": 40.09,
+        "long": -88.22,
+        "date": "[insert unix format here]",
+        "uploader": "jam",
+        "file": "audio/002.mp3"
+    }
+}

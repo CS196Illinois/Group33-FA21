@@ -47,7 +47,7 @@ function success(pos) {
 
 // Function to run on error when finding location
 function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`)
+    console.warn(`Geolocation Error (${err.code}): ${err.message}`)
 }
 
 var user = navigator.geolocation.getCurrentPosition(success, error, navOptions)
@@ -70,8 +70,7 @@ async function soundOnMap(id) {
     console.log(data.lat, data.long)
 
     // create map maker from JSON
-    const location = [data.lat, data.long]
-    new L.marker(location, {icon: logo})
+    new L.marker(data.location, {icon: logo})
     .addTo(map)
     .on("click", () => clickMarker(data));
 }
@@ -92,8 +91,6 @@ async function clickMarker(data) {
     var fetchAudioOptions = {
         method: 'GET',
         headers: {
-          //'Content-Type': `audio/${fileType}`,
-          //'Content-Type': 'audio/mpeg',
           id: JSON.stringify(data.id),
           type: JSON.stringify(data.type)
         } 
@@ -124,8 +121,25 @@ async function clickMarker(data) {
     div.appendChild(audio)
 }
 
-soundOnMap('001')
-soundOnMap('002')
+async function loadPins() {
+  console.log('about to fetch')
+  var idList = await fetch('/getAudioList')
+  .then(response => {
+    console.log(response)
+    return response.json()
+  })
+  .then(json => {
+    console.log(json)
+    return json.ids
+  })
+
+  idList.forEach(element => {
+    soundOnMap(element)
+  })
+  console.log("pins loaded!")
+}
+
+loadPins()
 
 /* ----- Plan for the map -----
   - Need to *iterate* through the Firebase JSON data and place "noisedots" on the map
