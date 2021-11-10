@@ -37,12 +37,6 @@ const options = {
 const app = express();
 app.use(express.static('public'))
 app.use(express.json())
-/*
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-  });
-*/
 
 // initial endpoint. we might change this to the map later.
 app.get('/', (req, res) =>

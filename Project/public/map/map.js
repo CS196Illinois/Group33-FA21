@@ -107,40 +107,21 @@ async function clickMarker(data) {
     // Fetches audio from server.
     var audioSource = await fetch('/firebaseAudio', fetchAudioOptions)
     .then(response => {
-      // console.log("response")
-      // console.log(response)
       return response.text()
     })
     .then(url => {
-      // console.log("url")
-      // console.log(url)
       return fetch(url)
     })
     .then(download => {
-      // console.log("download")
-      // console.log(download)
       return download.blob()
     })
     .then(blob => {
-      // console.log("blob")
-      // console.log(blob)
       return URL.createObjectURL(blob)
     })
     .catch(e => {
       console.log(e)
     })
     
-    /*
-    .then(response => {
-        console.log('response: ')
-        console.log(response)
-        return response
-    }).then(blob => {
-        console.log('blob')
-        console.log(blob)
-        return URL.createObjectURL(blob)
-    })
-    */
 
     // Grabs div from document, appends title of sound
     let div = document.getElementById('clicked marker')
@@ -152,11 +133,9 @@ async function clickMarker(data) {
 
     // creates an audio player and adds it to div
     let audio = document.createElement('audio')
-    // let source = document.createElement('source')
     audio.controls = 'controls'
     audio.src = audioSource
     audio.type = `audio\\${fileType}`
-    // audio.appendChild(source)
     div.appendChild(audio)
 }
 
