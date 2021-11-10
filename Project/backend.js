@@ -5,6 +5,7 @@ const http = require('http');
 const express = require('express');
 const fetch = require('node-fetch');
 // const Blob = require('node:buffer');
+const uuid = require('uuid');
 
 //import firebase things
 const initFirebase = require('firebase/app');
@@ -67,16 +68,42 @@ app.get('/firebaseJSON', (req, res) => {
     .then(data => res.send(data))
 })
 
+//uploads the JSON info to firebase db
+app.post('/firebaseJSON', (req, res) => {
+    // get the generated UUID from req
+    res.end()
+})
+
 //Fixed: gets audio file from firebase db
 app.get('/firebaseAudio', async (req, res) => {
     const pathReference = firebaseStorage.ref(storage, 
         `audio/${req.headers.id.replace(/\"/g, "")}.${req.headers.type.replace(/\"/g, "")}`)
     await firebaseStorage.getDownloadURL(pathReference)
     .then(url => {
-      res.send(url)
-      // fetch(url)
+        res.send(url)
+        // fetch(url)
     })
 });
+
+//uploads the JSON info to firebase db
+app.post('/firebaseAudio', (req, res) => {
+    // get the generated UUID from req
+    // get the fileType from req
+    //---- Possible Things for Uploading File ----
+    /*
+    var metadata = {
+      contentType: 'image/jpeg',
+    };
+    var uploadTask = storageRef.child('images/mountains.jpg').put(file, metadata);
+    */
+    // OR
+    /* //'file' comes from the Blob or File API
+        ref.put(file).then((snapshot) => {
+            console.log('Uploaded a blob or file!');
+        });
+  */
+    res.end()
+})
 
 // runs app on both https and http
 const httpsServer = https.createServer(options, app);
