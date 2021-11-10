@@ -73,9 +73,7 @@ async function soundOnMap(id) {
     const location = [data.lat, data.long]
     new L.marker(location, {icon: logo})
     .addTo(map)
-    .on("click", () => {
-        clickMarker(data)
-    });
+    .on("click", () => clickMarker(data));
 }
 
 
@@ -103,21 +101,11 @@ async function clickMarker(data) {
 
     // Fetches audio from server.
     var audioSource = await fetch('/firebaseAudio', fetchAudioOptions)
-    .then(response => {
-      return response.text()
-    })
-    .then(url => {
-      return fetch(url)
-    })
-    .then(download => {
-      return download.blob()
-    })
-    .then(blob => {
-      return URL.createObjectURL(blob)
-    })
-    .catch(e => {
-      console.log(e)
-    })
+    .then(response => response.text())
+    .then(url => fetch(url))
+    .then(download => download.blob())
+    .then(blob => URL.createObjectURL(blob))
+    .catch(e => console.log(`Error occured: ${e}`))
     
 
     // Grabs div from document, appends title of sound
