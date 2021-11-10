@@ -101,9 +101,6 @@ async function clickMarker(data) {
         } 
     }
 
-    console.log(`fetching ${data.id}.${data.type}`)
-    console.log(fetchAudioOptions.headers["Content-Type"])
-
     // Fetches audio from server.
     var audioSource = await fetch('/firebaseAudio', fetchAudioOptions)
     .then(response => {
