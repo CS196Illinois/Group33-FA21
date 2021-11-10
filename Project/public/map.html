@@ -11,10 +11,10 @@
         crossorigin=""></script>
         <script src="/audio/getAudio.js"></script>
         <style>
-            #map { height: 100vh; width: 100% }
+            #map { height: 70vh; width: 100% }
         </style>
     </head>
-    <body>
+    <body class="bg-secondary">
 
         <header class="p-2 bg-dark text-white">
           <div class="container">
@@ -33,9 +33,11 @@
           </div>
         </header>
 
-        <div class="container">
+        <div class="container col-12">
           <main>
-            <h1 class="h1">Map</h1>
+            <div class="bg-dark text-light">
+              <h1 style="margin-bottom: 0; background-color: rgb(47, 50, 53);">Map</h1>
+            </div>
             <div class="col-md">
               <div id="map">
                 <script type="module" src="/map/map.js"></script>

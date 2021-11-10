@@ -1,9 +1,9 @@
 // Initialize map, including making object that defines our custom map marker
 const map = L.map('map').setView([40.1105, -88.2218], 13)
 const attribution = 
-    '&copy <a href ="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 
-const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+const tileUrl = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
 const tiles = L.tileLayer(tileUrl, { attribution })
 tiles.addTo(map)
 var logo = L.icon({
@@ -160,7 +160,7 @@ async function clickMarker(data) {
     div.appendChild(audio)
 }
 
-//soundOnMap('001')
+soundOnMap('001')
 soundOnMap('002')
 
 /* ----- Plan for the map -----
