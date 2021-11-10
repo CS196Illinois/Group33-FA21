@@ -1,9 +1,24 @@
 // Initialize map, including making object that defines our custom map marker
 const map = L.map('map').setView([40.1105, -88.2218], 13)
-const attribution = 
-'&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+const lightAttribution = 
+    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+const lightURL = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
+const darkAttribution = 
+    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+const darkURL = 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
 
-const tileUrl = 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png'
+const darkMode = true
+
+var tileUrl, attribution
+
+if (darkMode) {
+  tileUrl = darkURL
+  attribution = darkAttribution
+} else {
+  tileUrl = lightURL
+  attribution = lightAttribution
+}
+
 const tiles = L.tileLayer(tileUrl, { attribution })
 tiles.addTo(map)
 var logo = L.icon({
