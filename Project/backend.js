@@ -4,11 +4,11 @@ const https = require('https')
 const http = require('http')
 const express = require('express')
 const fetch = require('node-fetch')
-// const Blob = require('node:buffer')
 
 //import firebase things
 const initFirebase = require('firebase/app')
 const firebaseStorage = require('firebase/storage')
+const firebaseFirestore = require('firebase/firestore')
 const {getFirestore, Timestamp, FieldValue} = require('firebase/firestore')
 const { getEnvironmentData } = require('worker_threads')
 // putting the API key on the internet is bad. Get the key.js file from discord
@@ -27,8 +27,19 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebase = initFirebase.initializeApp(firebaseConfig) // is a firebase app instance
 const storage = firebaseStorage.getStorage(firebase) // is a FirebaseStorage Instance
-const db = getFirestore()
-const dots = db.collection('dots').get().then(rep => console.log(rep))
+const db = firebaseFirestore.getFirestore(firebase) // should be a FirebaseStorage Instance
+//const dots = firebase
+const dots = firebaseFirestore.collection(db, 'dots') //represents
+/*
+.get().then(rep => console.log(rep))
+*/
+const docs = firebaseFirestore.getDocs(dots)
+.then(querySnapshot => {
+  querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+  });
+});
 
 // initialize https
 const options = {
@@ -88,11 +99,6 @@ app.get('/getAudioList', (req, res) => {
     .then(response => response.json())
     .then(json => res.send(json))
 })
-
-
-
-
-
 
 // runs app on both https and http
 const httpsServer = https.createServer(options, app)
