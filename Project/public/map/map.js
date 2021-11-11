@@ -37,10 +37,7 @@ var navOptions = {
 // Function to run on geolocation success
 function success(pos) {
     var crd = pos.coords
-    console.log('Your current position is:')
-    console.log(`Latitude : ${crd.latitude}`)
-    console.log(`Longitude: ${crd.longitude}`)
-    console.log(`More or less ${crd.accuracy} meters.`)
+    console.log(`Your current position is: [${crd.latitude}, ${crd.longitude}]`)
     var userMark = L.marker([crd.latitude, crd.longitude], {icon: logo}).addTo(map)
     userMark.bindPopup("you!")
 }
@@ -67,10 +64,9 @@ async function soundOnMap(id) {
     // GET json file from server
     const data = await fetch('/firebaseJson', fetchJSONOptions)
     .then(response => response.json())
-    console.log(data.lat, data.long)
 
     // create map maker from JSON
-    new L.marker(data.location, {icon: logo})
+    new L.marker([data.location.latitude, data.location.longitude], {icon: logo})
     .addTo(map)
     .on("click", () => clickMarker(data));
 }
@@ -91,8 +87,7 @@ async function clickMarker(data) {
     var fetchAudioOptions = {
         method: 'GET',
         headers: {
-          id: JSON.stringify(data.id),
-          type: JSON.stringify(data.type)
+          file: data.fileName
         } 
     }
 
@@ -122,14 +117,11 @@ async function clickMarker(data) {
 }
 
 async function loadPins() {
-  console.log('about to fetch')
   var idList = await fetch('/getAudioList')
   .then(response => {
-    console.log(response)
     return response.json()
   })
-  .then(json => {
-    console.log(json)
+ .then(json => {
     return json.ids
   })
 
