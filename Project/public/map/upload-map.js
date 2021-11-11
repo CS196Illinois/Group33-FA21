@@ -1,5 +1,5 @@
-// File: map.js
-// Purpose: Map that is displayed on the Map section of the app
+// File: upload-map.js
+// Purpose: Map that is displayed on the Upload section of the app
 
 // Initialize map, including making object that defines our custom map marker
 const map = L.map('map').setView([40.1105, -88.2218], 13)
@@ -39,9 +39,24 @@ var logo = L.icon({
 
 // ------Marker that is placed where the user clicks (for testing)------------
 //var clickMarker = new L.marker([0,0], {icon: logo})
-//map.on('click', (e) => {
-//    clickMarker.setLatLng(e.latlng).addTo(map)
-//})
+var userMark = L.marker([0, 0], {icon: logo}).addTo(map)
+userMark.bindPopup("dot location")
+
+map.on('click', (e) => {
+    userMark.setLatLng(e.latlng).addTo(map)
+    // change the content of the two elements
+    displayLatLon()
+})
+
+// Updates the frontend text elements to display the lat and lon of the selected dot location
+function displayLatLon() {
+  var userPos = userMark.getLatLng()
+  var lat = parseFloat(userPos.lat.toString()).toFixed(4)
+  var lng = parseFloat(userPos.lng.toString()).toFixed(4)
+  document.getElementById('lat').textContent = `lat: ${lat}`
+  document.getElementById('lon').textContent = `lon: ${lng}`
+  console.log(userPos)
+}
 
 // Makes a map marker based on user's coordinates
 
@@ -59,8 +74,9 @@ function success(pos) {
     console.log(`Latitude : ${crd.latitude}`)
     console.log(`Longitude: ${crd.longitude}`)
     console.log(`More or less ${crd.accuracy} meters.`)
-    var userMark = L.marker([crd.latitude, crd.longitude], {icon: logo}).addTo(map)
-    userMark.bindPopup("you!")
+    userMark = L.marker([crd.latitude, crd.longitude], {icon: logo}).addTo(map)
+    userMark.bindPopup("dot location")
+    displayLatLon()
 }
 
 // Function to run on error when finding location
@@ -70,7 +86,7 @@ function error(err) {
 
 var user = navigator.geolocation.getCurrentPosition(success, error, navOptions)
 
-
+/* THIS is 
 // Makes a map marker from a given ID.
 async function soundOnMap(id) {
 
@@ -93,65 +109,4 @@ async function soundOnMap(id) {
     .addTo(map)
     .on("click", () => clickMarker(data));
 }
-
-
-// Function to be ran on marker click.
-// Fetches audio and appends it to the bottom of the page.
-async function clickMarker(data) {
-    
-    // this basically just replaces mp3 with 'mpeg' for MIME type
-    var fileType
-    if (data.type == 'mp3')
-        fileType = 'mpeg'
-    else
-        fileType = data.type
-
-    // creates an HTTP options object
-    var fetchAudioOptions = {
-        method: 'GET',
-        headers: {
-          //'Content-Type': `audio/${fileType}`,
-          //'Content-Type': 'audio/mpeg',
-          id: JSON.stringify(data.id),
-          type: JSON.stringify(data.type)
-        } 
-    }
-
-    // Fetches audio from server.
-    var audioSource = await fetch('/firebaseAudio', fetchAudioOptions)
-    .then(response => response.text())
-    .then(url => fetch(url))
-    .then(download => download.blob())
-    .then(blob => URL.createObjectURL(blob))
-    .catch(e => console.log(`Error occured: ${e}`))
-    
-
-    // Grabs div from document, appends title of sound
-    let div = document.getElementById('clicked marker')
-    let title = document.createElement('h3')
-    let titleText = (document.createTextNode(`${data.name}`))
-    div.innerHTML = ""
-    title.appendChild(titleText)
-    div.appendChild(title)
-
-    // creates an audio player and adds it to div
-    let audio = document.createElement('audio')
-    audio.controls = 'controls'
-    audio.src = audioSource
-    audio.type = `audio\\${fileType}`
-    div.appendChild(audio)
-}
-
-soundOnMap('001')
-soundOnMap('002')
-
-/* ----- Plan for the map -----
-  - Need to *iterate* through the Firebase JSON data and place "noisedots" on the map
-  - On the popup of each noisedots, the title can be displayed
-    AND things relevant information needs to be shown below such as:
-    - Sound Title: 
-    - Description: 
-    - *Uploader:
-    - Date of Upload:
-  - but above all needs to be an AUDIO TAG that actually plays the SELECTED noisedot's audio
 */
