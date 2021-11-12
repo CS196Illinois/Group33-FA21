@@ -26,10 +26,15 @@
         </div>
       </header>
 
-      <audio controls>
-          <source src="../audio/001.mp3" type='audio/mpeg'>
-      </audio>
-      <script>
+      <h1>
+        Browse Audio
+      </h1>
+      <h2>
+        Click the title of any sound to play it!
+      </h2>
+      <br><br>
+      <div id='soundList'></div>
+      <script src = '/browse/browse.js'>
         /* We want to be able to fetch all of the audio from Firebase and display it 
             using the fetch script, iterating through every element.
         * For this, we either need to:

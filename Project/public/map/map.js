@@ -55,20 +55,17 @@ var navOptions = {
 // Function to run on geolocation success
 function success(pos) {
     var crd = pos.coords
-    console.log('Your current position is:')
-    console.log(`Latitude : ${crd.latitude}`)
-    console.log(`Longitude: ${crd.longitude}`)
-    console.log(`More or less ${crd.accuracy} meters.`)
+    console.log(`Your current position is: [${crd.latitude}, ${crd.longitude}]`)
     var userMark = L.marker([crd.latitude, crd.longitude], {icon: logo}).addTo(map)
-    userMark.bindPopup("you!")
+    userMark.bindPopup("<a href='/upload/'>Upload at your location</a>")
 }
 
 // Function to run on error when finding location
 function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`)
+    console.warn(`Geolocation Error (${err.code}): ${err.message}`)
 }
 
-var user = navigator.geolocation.getCurrentPosition(success, error, navOptions)
+navigator.geolocation.getCurrentPosition(success, error, navOptions)
 
 
 // Makes a map marker from a given ID.
@@ -85,11 +82,9 @@ async function soundOnMap(id) {
     // GET json file from server
     const data = await fetch('/firebaseJson', fetchJSONOptions)
     .then(response => response.json())
-    console.log(data.lat, data.long)
 
     // create map maker from JSON
-    const location = [data.lat, data.long]
-    new L.marker(location, {icon: logo})
+    new L.marker([data.location.latitude, data.location.longitude], {icon: logo})
     .addTo(map)
     .on("click", () => clickMarker(data));
 }
@@ -110,10 +105,7 @@ async function clickMarker(data) {
     var fetchAudioOptions = {
         method: 'GET',
         headers: {
-          //'Content-Type': `audio/${fileType}`,
-          //'Content-Type': 'audio/mpeg',
-          id: JSON.stringify(data.id),
-          type: JSON.stringify(data.type)
+          file: data.fileName
         } 
     }
 
@@ -128,9 +120,9 @@ async function clickMarker(data) {
 
     // Grabs div from document, appends title of sound
     let div = document.getElementById('clicked marker')
+
     let title = document.createElement('h3')
-    let titleText = (document.createTextNode(`${data.name}`))
-    div.innerHTML = ""
+    let titleText = document.createTextNode(`${data.name}`)
     title.appendChild(titleText)
     div.appendChild(title)
 
@@ -142,8 +134,22 @@ async function clickMarker(data) {
     div.appendChild(audio)
 }
 
-soundOnMap('001')
-soundOnMap('002')
+async function loadPins() {
+  var idList = await fetch('/getAudioList')
+  .then(response => {
+    return response.json()
+  })
+ .then(json => {
+    return json.ids
+  })
+
+  idList.forEach(element => {
+    soundOnMap(element)
+  })
+  console.log("pins loaded!")
+}
+
+loadPins()
 
 /* ----- Plan for the map -----
   - Need to *iterate* through the Firebase JSON data and place "noisedots" on the map
