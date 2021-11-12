@@ -39,7 +39,7 @@ function success(pos) {
     var crd = pos.coords
     console.log(`Your current position is: [${crd.latitude}, ${crd.longitude}]`)
     var userMark = L.marker([crd.latitude, crd.longitude], {icon: logo}).addTo(map)
-    userMark.bindPopup("you!")
+    userMark.bindPopup("<a href='/upload/'>Upload at your location</a>")
 }
 
 // Function to run on error when finding location
@@ -47,7 +47,7 @@ function error(err) {
     console.warn(`Geolocation Error (${err.code}): ${err.message}`)
 }
 
-var user = navigator.geolocation.getCurrentPosition(success, error, navOptions)
+navigator.geolocation.getCurrentPosition(success, error, navOptions)
 
 
 // Makes a map marker from a given ID.
@@ -102,9 +102,9 @@ async function clickMarker(data) {
 
     // Grabs div from document, appends title of sound
     let div = document.getElementById('clicked marker')
+
     let title = document.createElement('h3')
-    let titleText = (document.createTextNode(`${data.name}`))
-    div.innerHTML = ""
+    let titleText = document.createTextNode(`${data.name}`)
     title.appendChild(titleText)
     div.appendChild(title)
 

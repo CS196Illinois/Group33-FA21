@@ -98,7 +98,7 @@ app.get('/firebaseAudio', (req, res) => {
 app.get('/getAudioList', (_, res) => {
     const toSend = {}
     const ids = []
-    jsonList.forEach((_, id) => {
+    jsonList.forEach((__, id) => {
         ids.push(id)
     })
     toSend['ids'] = ids
