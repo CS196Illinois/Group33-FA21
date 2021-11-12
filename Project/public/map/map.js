@@ -24,7 +24,7 @@ if (darkMode) {
 
 const tiles = L.tileLayer(tileUrl, { attribution })
 tiles.addTo(map)
-var logo = L.icon({
+var soundDot = L.icon({
     iconUrl: "/logos/dot.png",
     iconSize:     [32, 32], // size of the icon
     shadowSize:   [50, 64], // size of the shadow
@@ -33,12 +33,21 @@ var logo = L.icon({
     popupAnchor:  [0, -16] // point from which the popup should open relative to the iconAnchor
 })
 
+var locationIcon = L.icon({
+  iconUrl: "/logos/currentLocation.png",
+  iconSize:     [32, 32], // size of the icon
+  shadowSize:   [50, 64], // size of the shadow
+  iconAnchor:   [16, 16], // point of the icon which will correspond to marker's location
+  shadowAnchor: [4, 62],  // the same for the shadow
+  popupAnchor:  [0, -16] // point from which the popup should open relative to the iconAnchor
+})
+
 //----- ISR Marker (for testing)---------
-// var isr = L.marker([40.11057618021301, -88.22185298950282], {icon: logo}).addTo(map)
+// var isr = L.marker([40.11057618021301, -88.22185298950282], {icon: soundDot}).addTo(map)
 // isr.bindPopup("<b>test</b><br>the isr")
 
 // ------Marker that is placed where the user clicks (for testing)------------
-//var clickMarker = new L.marker([0,0], {icon: logo})
+//var clickMarker = new L.marker([0,0], {icon: soundDot})
 //map.on('click', (e) => {
 //    clickMarker.setLatLng(e.latlng).addTo(map)
 //})
@@ -56,7 +65,7 @@ var navOptions = {
 function success(pos) {
     var crd = pos.coords
     console.log(`Your current position is: [${crd.latitude}, ${crd.longitude}]`)
-    var userMark = L.marker([crd.latitude, crd.longitude], {icon: logo}).addTo(map)
+    var userMark = L.marker([crd.latitude, crd.longitude], {icon: locationIcon}).addTo(map)
     userMark.bindPopup("<a href='/upload/'>Upload at your location</a>")
 }
 
@@ -84,7 +93,7 @@ async function soundOnMap(id) {
     .then(response => response.json())
 
     // create map maker from JSON
-    new L.marker([data.location.latitude, data.location.longitude], {icon: logo})
+    new L.marker([data.location.latitude, data.location.longitude], {icon: soundDot})
     .addTo(map)
     .on("click", () => clickMarker(data));
 }
