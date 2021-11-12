@@ -86,12 +86,6 @@ app.get('/firebaseJSON', (req, res) => {
    res.send(jsonList.get(id))
 })
 
-//uploads the JSON info to firebase db
-app.post('/firebaseJSON', (req, res) => {
-    // get the generated UUID from req
-    res.end()
-})
-
 // gets audio file from firebase db
 app.get('/firebaseAudio', (req, res) => {
     const pathReference = firebaseStorage.ref(storage, `audio/${req.headers.file.replace(/\"/g, "")}`)
@@ -131,6 +125,13 @@ app.post('/firebaseAudio', (req, res) => {
   */
     res.end()
 })
+
+//uploads the JSON info to firebase db
+app.post('/firebaseJSON', (req, res) => {
+    // get the generated UUID from req
+    res.end()
+})
+
 
 // runs app on both https and http
 const httpsServer = https.createServer(options, app)

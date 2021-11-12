@@ -24,6 +24,7 @@ if (darkMode) {
 
 const tiles = L.tileLayer(tileUrl, { attribution })
 tiles.addTo(map)
+
 var soundDot = L.icon({
     iconUrl: "/logos/dot.png",
     iconSize:     [32, 32], // size of the icon
@@ -41,6 +42,11 @@ var locationIcon = L.icon({
   shadowAnchor: [4, 62],  // the same for the shadow
   popupAnchor:  [0, -16] // point from which the popup should open relative to the iconAnchor
 })
+
+// set up variables
+var div = document.getElementById("clicked marker")
+var title
+var titleText
 
 //----- ISR Marker (for testing)---------
 // var isr = L.marker([40.11057618021301, -88.22185298950282], {icon: soundDot}).addTo(map)
@@ -127,11 +133,10 @@ async function clickMarker(data) {
     .catch(e => console.log(`Error occured: ${e}`))
     
 
-    // Grabs div from document, appends title of sound
-    let div = document.getElementById('clicked marker')
-
-    let title = document.createElement('h3')
-    let titleText = document.createTextNode(`${data.name}`)
+    // appends title of sound and adds it to div
+    title = document.createElement('h3')
+    titleText = document.createTextNode(`${data.name}`)
+    div.innerHTML = ''
     title.appendChild(titleText)
     div.appendChild(title)
 
