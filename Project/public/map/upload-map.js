@@ -51,6 +51,8 @@ map.on('click', (e) => {
 // Updates the frontend text elements to display the lat and lon of the selected dot location
 function displayLatLon() {
   var userPos = userMark.getLatLng()
+  globalLatLng.lat = userPos.lat
+  globalLatLng.lng = userPos.lng
   var lat = parseFloat(userPos.lat.toString()).toFixed(4)
   var lng = parseFloat(userPos.lng.toString()).toFixed(4)
   document.getElementById('lat').textContent = `lat: ${lat}`
@@ -89,7 +91,6 @@ var user = navigator.geolocation.getCurrentPosition(success, error, navOptions)
 /* THIS is 
 // Makes a map marker from a given ID.
 async function soundOnMap(id) {
-
     // create options object for GET request
     var fetchJSONOptions = {
         headers: {

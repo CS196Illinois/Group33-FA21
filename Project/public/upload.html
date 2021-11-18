@@ -8,12 +8,21 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-    <style>
-        #map { height: 30vh; width: 100% }
-    </style>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""></script>
+  <script>
+    // Cooridantes used for upload
+    // Set on user click
+    // Grabbed by the upload script
+    var globalLatLng = {
+      lat: null,
+      lng: null
+    }
+  </script>
+  <style>
+      #map { height: 30vh; width: 100% }
+  </style>
 <title>Input / Upload Page</title>
 </head>
 <body class="bg-secondary">
@@ -41,7 +50,7 @@
         <div class="col-lg-6 p-3">
           <div>
             <label for="audioFile" class="form-label">File to Upload:  </label>
-            <input class="form-control" type="file" id="audioFile" name="audioFile">
+            <input class="form-control" accept="audio/*" type="file" id="audioFile" name="audioFile">
           </div>
           <div class='p-2'></div>
           <div class="col-md">
@@ -72,7 +81,7 @@
             <input type="text" class="form-control" id="description" name="description">
           </div>
           <div class="p-1"></div>
-          <button type="button" class="btn btn-dark" id="uploadButton">Upload</button>
+          <button class="btn btn-dark" id="uploadButton">Upload</button>
         </div>
 				<div class="col-lg-6 p-3 bg-danger">
           <h1 class="text-center h1"> Recording Section Here?</h1>
@@ -80,6 +89,7 @@
       </div>
     </main>
   </div>
+  <script src="/upload/upload.js"></script>
 
   <script>
     /* writing these notes in a script tag cuz I'm lazy, and I really don't wanna code this rn
@@ -107,6 +117,5 @@
         - Upload the Audio file (named using the key) to Firebase
     */
   </script>
-
 </body>
 </html>
