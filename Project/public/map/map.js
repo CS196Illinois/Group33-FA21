@@ -45,8 +45,9 @@ var locationIcon = L.icon({
 
 // set up variables
 var div = document.getElementById("clicked marker")
-var title
-var titleText
+var aName, nameText
+var audio
+var aDescription
 
 //----- ISR Marker (for testing)---------
 // var isr = L.marker([40.11057618021301, -88.22185298950282], {icon: soundDot}).addTo(map)
@@ -132,20 +133,20 @@ async function clickMarker(data) {
     .then(blob => URL.createObjectURL(blob))
     .catch(e => console.log(`Error occured: ${e}`))
     
+    // updates the title element on the page
+    aName = document.getElementById('aName')
+    aName.textContent = `Name: ${data.name}`;
 
-    // appends title of sound and adds it to div
-    title = document.createElement('h3')
-    titleText = document.createTextNode(`${data.name}`)
-    div.innerHTML = ''
-    title.appendChild(titleText)
-    div.appendChild(title)
-
-    // creates an audio player and adds it to div
-    let audio = document.createElement('audio')
+    // changes the audio source
+    audio = document.getElementById('audio')
     audio.controls = 'controls'
+    // audio.loop = 'loop' // loops the audio
     audio.src = audioSource
     audio.type = `audio\\${fileType}`
-    div.appendChild(audio)
+
+    // update the description
+    aDescription = document.getElementById('aDescription')
+    aDescription.textContent = data.description
 }
 
 async function loadPins() {
